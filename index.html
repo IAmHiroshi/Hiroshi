@@ -131,39 +131,45 @@
         </div>
     </section>
 
-    <!-- ✅ FORM BUTTON (POPUP CONTACT FORM) -->
-    <script src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
-    <script>
-      window.formbutton=window.formbutton||function(){(formbutton.q=formbutton.q||[]).push(arguments)};
-      formbutton("create", {
-        action: "https://formspree.io/f/xqegawye",
-        title: "How can we help?",
-        fields: [
-          { 
-            type: "email", 
-            label: "Email:", 
-            name: "email",
-            required: true,
-            placeholder: "your@email.com"
-          },
-          {
-            type: "textarea",
-            label: "Message:",
-            name: "message",
-            placeholder: "What's on your mind?",
-          },
-          { type: "submit" }      
-        ],
-        styles: {
-          title: {
-            backgroundColor: "gray"
-          },
-          button: {
-            backgroundColor: "gray"
-          }
-        }
-      });
-    </script>
+<!-- ✅ FORM BUTTON (FIXED VERSION) -->
+<script src="https://formspree.io/js/formbutton-v1.min.js"></script>
+<script>
+  window.formbutton = window.formbutton || function(){(formbutton.q = formbutton.q || []).push(arguments)};
+
+  formbutton("create", {
+    action: "https://formspree.io/f/xqegawye",
+    title: "Message Me",
+    
+    position: "right", // 👈 force position
+    
+    fields: [
+      { 
+        type: "email", 
+        label: "Email:", 
+        name: "email",
+        required: true,
+        placeholder: "your@email.com"
+      },
+      {
+        type: "textarea",
+        label: "Message:",
+        name: "message",
+        placeholder: "What's on your mind?",
+      },
+      { type: "submit" }      
+    ],
+
+    styles: {
+      button: {
+        backgroundColor: "#b89b5e", // gold tone (matches your theme)
+        zIndex: 99999 // 👈 ensures it's above everything
+      },
+      title: {
+        backgroundColor: "#b89b5e"
+      }
+    }
+  });
+</script>
 
 </body>
 </html>
