@@ -74,9 +74,9 @@ nav a{
   padding: 0px 25px;
 }
 
-nav a:hover ,
-.active {
-  color : #4acfee;
+nav a:hover,
+nav a.active {
+  color: #4acfee;
   text-decoration: underline;
 }
 
@@ -293,4 +293,20 @@ nav a:hover ,
   .hero h1{
     font-size: 40px;
   }
+}
+/* Bullet fix (scoped properly, no conflicts) */
+.timeline-item ul {
+  padding-left: 18px;
+  margin-top: 5px;
+}
+
+.timeline-item ul li {
+  color: rgba(255,255,255,0.65) !important;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 6px;
+}
+
+.timeline-item ul li strong {
+  color: #4acfee !important;
 }
