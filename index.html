@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,11 +9,9 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
   <style>
-    /* ── Page sections ── */
     .page { display: none; width: 100%; height: 100%; }
     .page.active { display: flex; flex-direction: column; }
 
-    /* ── Shared page layout ── */
     .page-content {
       padding: 0 10%;
       flex: 1;
@@ -35,38 +33,27 @@
       margin-bottom: 40px;
     }
 
-    /* ── Services ── */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       padding-bottom: 30px;
     }
+
     .service-card {
       background: rgba(74,207,238,0.05);
       border: 1px solid rgba(74,207,238,0.2);
       border-radius: 20px;
       padding: 30px 25px;
-      transition: 0.3s;
-      cursor: default;
     }
-    .service-card:hover {
-      background: rgba(74,207,238,0.1);
-      border-color: #4acfee;
-      box-shadow: 0 0 15px rgba(74,207,238,0.2);
-      transform: translateY(-4px);
-    }
-    .service-icon { font-size: 36px; color: #4acfee; margin-bottom: 15px; }
-    .service-card h3 { color: white; font-size: 20px; margin-bottom: 10px; }
-    .service-card p { color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.7; }
 
-    /* ── Experience ── */
     .exp-columns {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 40px;
       padding-bottom: 30px;
     }
+
     .exp-col-title {
       color: #4acfee;
       font-size: 22px;
@@ -75,505 +62,117 @@
       align-items: center;
       gap: 10px;
     }
+
     .timeline { position: relative; padding-left: 25px; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, #4acfee, transparent);
-    }
-    .timeline-item { position: relative; margin-bottom: 30px; }
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -30px; top: 6px;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: #4acfee;
-      box-shadow: 0 0 8px #4acfee;
-    }
+
+    .timeline-item { margin-bottom: 30px; }
+
     .timeline-item .date { color: #4acfee; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
     .timeline-item h3 { color: white; font-size: 18px; margin-bottom: 4px; }
     .timeline-item .company { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 8px; }
     .timeline-item p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.7; }
 
-    /* ── Tech Stack ── */
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 40px;
       padding-bottom: 30px;
     }
-    .tech-section { margin-bottom: 35px; }
-    .tech-section-title {
-      color: #4acfee;
-      font-size: 18px;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .tech-grid { display: flex; flex-wrap: wrap; gap: 12px; }
-    .tech-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      background: rgba(74,207,238,0.07);
-      border: 1px solid rgba(74,207,238,0.25);
-      border-radius: 50px;
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
-      transition: 0.3s;
-      cursor: default;
-    }
-    .tech-pill:hover {
-      background: rgba(74,207,238,0.15);
-      border-color: #4acfee;
-      box-shadow: 0 0 10px rgba(74,207,238,0.2);
-      transform: translateY(-2px);
-    }
-    .tech-pill i { font-size: 20px; color: #4acfee; }
-    .bar-item { margin-bottom: 16px; }
-    .bar-label { display: flex; justify-content: space-between; color: white; font-size: 14px; margin-bottom: 6px; }
-    .bar-label span:last-child { color: #4acfee; }
-    .bar-track { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-    .bar-fill {
-      height: 100%;
-      border-radius: 10px;
-      background: linear-gradient(to right, #4acfee, #53f8c9);
-      width: 0;
-      transition: width 1.2s ease;
-    }
 
-    /* ── Contact ── */
     .contact-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 60px;
-      padding-bottom: 30px;
-      align-items: start;
-    }
-    .contact-info h3 { color: white; font-size: 24px; margin-bottom: 10px; }
-    .contact-info > p { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.8; margin-bottom: 35px; }
-    .contact-detail { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-    .contact-detail-icon {
-      width: 45px; height: 45px;
-      border: 2px solid #4acfee;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: #4acfee;
-      font-size: 20px;
-      flex-shrink: 0;
-      transition: 0.3s;
-    }
-    .contact-detail:hover .contact-detail-icon {
-      background: #4acfee; color: #0e1217; box-shadow: 0 0 10px #4acfee;
-    }
-    .contact-detail-text span { display: block; color: rgba(255,255,255,0.45); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
-    .contact-detail-text p { color: white; font-size: 15px; margin: 2px 0 0 0; }
-    .social-links { display: flex; gap: 12px; margin-top: 30px; }
-    .social-links a {
-      display: inline-flex; padding: 10px;
-      border: 2px solid #4acfee; border-radius: 50%;
-      font-size: 22px; color: #4acfee; text-decoration: none; transition: 0.3s;
-    }
-    .social-links a:hover { background: #4acfee; color: #0e1217; box-shadow: 0 0 10px #4acfee; }
-    .contact-cta h3 { color: white; font-size: 22px; margin-bottom: 12px; }
-    .contact-cta > p { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.8; margin-bottom: 30px; }
-    .open-form-btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 15px 35px;
-      background-color: #4acfee; border: 2px solid #4acfee; border-radius: 40px;
-      box-shadow: 0 0 10px #4acfee;
-      font-size: 16px; font-weight: 900; color: #0e1217;
-      cursor: pointer; transition: 0.3s;
-    }
-    .open-form-btn:hover { background-color: transparent; box-shadow: none; color: #4acfee; }
-    .availability-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; color: rgba(255,255,255,0.6); font-size: 14px; }
-    .availability-dot { width: 8px; height: 8px; border-radius: 50%; background: #53f8c9; box-shadow: 0 0 6px #53f8c9; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-    /* ── Responsive ── */
-    @media (max-width: 980px) {
-      .services-grid { grid-template-columns: repeat(2,1fr); }
-      .exp-columns, .two-col, .contact-layout { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 580px) {
-      .services-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
+
 <body>
-  <video autoplay loop muted plays-inline class="back-vid">
-    <source src="images/galaxy.mp4" type="video/mp4">
-  </video>
 
   <section class="main-section">
-    <nav>
-      <h1 data-aos="zoom-in" data-aos-duration="1000"><span style="color: #4acfee;">Hiroshi</span>Sugawara</h1>
-      <ul>
-        <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100"><a class="active" href="#" data-page="home">Home</a></li>
-        <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"><a href="#" data-page="services">Services Offered</a></li>
-        <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300"><a href="#" data-page="experience">Experience</a></li>
-        <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400"><a href="#" data-page="tech">Tech Stack</a></li>
-        <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500"><a href="#" data-page="contact">Contact</a></li>
-      </ul>
-    </nav>
 
-    <!-- ═══════════════ HOME ═══════════════ -->
-    <div class="page active" id="page-home">
-      <div class="hero">
-        <div class="hero-info">
-          <h1 data-aos="fade-right" data-aos-duration="1000" data-aos-delay="700">Hi, I'm Hiroshi</h1>
-          <h2 data-aos="fade-left" data-aos-duration="1000" data-aos-delay="900">I'm a Developer</h2>
-          <p data-aos="flip-down" data-aos-duration="1000" data-aos-delay="1000">
-            I am a Systems-Driven Specialist providing high-level support for corporate operations and creator growth. 
-            I bridge the gap between technical precision and creative outreach to deliver measurable results for my clients.
-
-            I am a Performance-Focused partner, equipped with a high-speed technical setup and a commitment to 100% accuracy in fast-paced environments.
-          </p>
-          <div class="Buttons">
-            <button class="btn" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="1100">Hire me</button> 
-            <ul class="ul-icons">
-              <li><a href=""><i class='bx bxl-github'></i></a></li>
-              <li><a href=""><i class='bx bxl-twitter'></i></a></li>
-              <li><a href=""><i class='bx bxl-youtube'></i></a></li>
-              <li><a href=""><i class='bx bxl-facebook-circle'></i></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="hero-img" data-aos="zoom-in-left" data-aos-duration="2500">
-          <img src="images/man1.png" alt="person-img">
-        </div>
-      </div>
-
-      <div class="info-sec">
-        <div class="info-card">
-          <h1>1+</h1>
-          <p>Year of <br> Experience</p>
-        </div>
-        <div class="info-card">
-          <h1>10+</h1>
-          <p>Technical <br> Skills</p>
-        </div>
-        <div class="info-card">
-          <h1>2</h1>
-          <p>Projects <br> Completed</p>
-        </div>
-        <div class="info-card">
-          <h1>1</h1>
-          <p>Satisfied <br> Clients</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══════════════ SERVICES ═══════════════ -->
-    <div class="page" id="page-services">
-      <div class="page-content">
-        <h1 class="page-title">Services <span>Offered</span></h1>
-        <p class="page-subtitle">Here's what I can help you with. Each service is tailored to your specific needs.</p>
-
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon"><i class='bx bx-code-alt'></i></div>
-            <h3>AI & Automation Specialist</h3>
-            <p>The "Right-Hand" Partner: I’m here to be your right hand. I take over the daily mental load by managing your messy inbox, juggling your calendar, and handling travel. My goal is to let you focus on growing your business instead of just keeping it afloat.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class='bx bx-palette'></i></div>
-            <h3>Website Design & Page Layout</h3>
-            <p> Visual Storyteller & UX Optimizer: I build websites that look great and actually work. I focus on clean layouts that make it easy for your visitors to find what they need and take action. Whether it’s a quick landing page or a full site refresh, I make sure your online home reflects your brand.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class='bx bx-mobile-alt'></i></div>
-            <h3>Social Media Manager (SMM)</h3>
-            <p> Growth & Engagement Architect: I help you show up consistently without the burnout. I handle everything from planning your content and posting at the right times to jumping into the comments to talk to your followers. I build a page people actually want to follow.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class='bx bx-server'></i></div>
-            <h3>Lead Generation Specialist</h3>
-            <p>The Opportunity Hunter: I’m the one who gets your foot in the door. I find the right leads, send out personalized messages, and handle the back-and-forth of project applications. I do the legwork to find you new opportunities while you focus on closing deals.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class='bx bx-search-alt'></i></div>
-            <h3>Technical Document Specialist</h3>
-            <p>Clarity & Precision Expert: I take complicated info and turn it into something easy to read. Whether it’s writing step-by-step guides for your team or creating professional manuals for your clients, I make sure everything is clear, organized, and looks sharp.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class='bx bx-support'></i></div>
-            <h3>Virtual Assistant</h3>
-            <p>The "Right-Hand" Partner: I’m here to be your right hand. I take over the daily mental load by managing your messy inbox, juggling your calendar, and handling travel. My goal is to let you focus on growing your business instead of just keeping it afloat.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══════════════ EXPERIENCE ═══════════════ -->
+    <!-- EXPERIENCE -->
     <div class="page" id="page-experience">
       <div class="page-content">
         <h1 class="page-title">My <span>Experience</span></h1>
-        <p class="page-subtitle">A timeline of my professional journey and academic background.</p>
 
-<div class="exp-columns">
-  <div>
-    <h2 class="exp-col-title"><i class='bx bx-briefcase'></i> Work Experience</h2>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="date">Jan 2025 – Jan 2026</div>
-        <h3>Freelance Virtual Assistant | Junior Social Media Manager (SMM)</h3>
-        <div class="company">Self-Employed / Remote</div>
-        <p>
-          <ul>
-            <li><strong>Executive Admin:</strong> Streamlined operations via proactive calendar management and email filtering.</li>
-            <li><strong>Social Media:</strong> Managed daily Facebook operations, content scheduling, and technical troubleshooting.</li>
-            <li><strong>Growth & Monetization:</strong> Drove engagement and reached eligibility for creator monetization tools.</li>
-            <li><strong>Community Moderation:</strong> Handled high-volume inquiries and moderated comments to maintain brand presence.</li>
-            <li><strong>Technical Support:</strong> Resolved account issues and coordinated with platform support for maximum uptime.</li>
-          </ul>
-        </p>
-      </div>
+        <div class="exp-columns">
 
-      <div class="timeline-item">
-        <div class="date">Jan 2018 – Apr 2018</div>
-        <h3>Machinist Assistant (Intership)</h3>
-        <div class="company">Ramcar Technology, Inc.</div>
-        <p>
-          <ul>
-            <li><strong>Precision Assembly:</strong> Assembled components according to technical blueprints, ensuring 100% alignment with quality standards.</li>
-            <li><strong>Quality Inspection:</strong> Performed measurements and inspections using metrology tools to verify part accuracy and design compliance.</li>
-            <li><strong>CAD/CAM & Design:</strong> Interpreted complex technical drawings and project plans using CAD/CAM systems for manufacturing tasks.</li>
-            <li><strong>Machine Operation:</strong> Assisted in the setup and safe operation of machine tools to support efficient fabrication and assembly.</li>
-            <li><strong>Technical Documentation:</strong> Maintained accurate records of manufacturing processes, internship activities, and project outputs.</li>
-          </ul>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <h2 class="exp-col-title"><i class='bx bx-book-open'></i> Education</h2>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="date">2014 – 2018</div>
-        <h3>Bachelor of Science in Industrial Technology, Major in Mechanical Technology</h3>
-        <div class="company">Bulacan State University</div>
-    <p>
-  <ul class="custom-bullets">
-    <li><strong>Mechanical Systems:</strong> Studied core mechanical principles and industrial manufacturing processes to support efficient production.</li>
-    <li><strong>Welding Specialization:</strong> Completed intensive training in SMAW, GMAW (MIG), and TIG welding techniques and safety.</li>
-    <li><strong>Technical Design:</strong> Built a strong foundation in CAD design for creating precise technical drawings and blueprints.</li>
-    <li><strong>Quality Control:</strong> Applied metrology principles to ensure all manufactured parts met strict engineering tolerances.</li>
-  </ul>
-</p>
-      </div>
-
-      <div class="timeline-item">
-        <div class="date">2023</div>
-        <h3>Machinist NC II Certificate</h3>
-        <div class="company">Technical Education and Skills Development Authority (TESDA)</div>
-<p>
-  <ul class="custom-bullets">
-    <li><strong>Precision Metalworking:</strong> Mastered hands-on fabrication and metal-shaping techniques to meet professional industry standards.</li>
-    <li><strong>Machine Operation:</strong> Expertly handled the setup and safe operation of lathes and milling machines.</li>
-    <li><strong>CNC Programming:</strong> Performed automated machining tasks using CNC equipment for high-accuracy component production.</li>
-    <li><strong>Technical Compliance:</strong> Interpreted complex blueprints to ensure every finished part aligned perfectly with design specifications.</li>
-  </ul>
-</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-    <!-- ═══════════════ TECH STACK ═══════════════ -->
-    <div class="page" id="page-tech">
-      <div class="page-content">
-        <h1 class="page-title">Tech <span>Stack</span></h1>
-        <p class="page-subtitle">The tools and technologies I use to build modern digital experiences.</p>
-
-        <div class="two-col">
+          <!-- WORK -->
           <div>
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-code'></i> Languages</h3>
-              <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bxl-html5'></i> HTML5</div>
-                <div class="tech-pill"><i class='bx bxl-css3'></i> CSS3</div>
-                <div class="tech-pill"><i class='bx bxl-javascript'></i> JavaScript</div>
-                <div class="tech-pill"><i class='bx bxl-typescript'></i> TypeScript</div>
-                <div class="tech-pill"><i class='bx bxl-python'></i> Python</div>
+            <h2 class="exp-col-title">Work Experience</h2>
+            <div class="timeline">
+
+              <div class="timeline-item">
+                <div class="date">Jan 2025 – Jan 2026</div>
+                <h3>Freelance Virtual Assistant | Junior Social Media Manager</h3>
+                <div class="company">Self-Employed</div>
+
+                <ul>
+                  <li><strong>Executive Admin:</strong> Streamlined operations via calendar and email management.</li>
+                  <li><strong>Social Media:</strong> Managed Facebook operations and content scheduling.</li>
+                  <li><strong>Growth & Monetization:</strong> Achieved eligibility for monetization tools.</li>
+                  <li><strong>Community Moderation:</strong> Handled engagement and audience interaction.</li>
+                  <li><strong>Technical Support:</strong> Resolved platform-related issues.</li>
+                </ul>
               </div>
-            </div>
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-layer'></i> Frameworks & Libraries</h3>
-              <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bxl-react'></i> React</div>
-                <div class="tech-pill"><i class='bx bxl-nodejs'></i> Node.js</div>
-                <div class="tech-pill"><i class='bx bx-grid-alt'></i> Tailwind CSS</div>
-                <div class="tech-pill"><i class='bx bxl-sass'></i> SASS</div>
-                <div class="tech-pill"><i class='bx bx-server'></i> Express.js</div>
+
+              <div class="timeline-item">
+                <div class="date">Jan 2018 – Apr 2018</div>
+                <h3>Machinist Assistant (Internship)</h3>
+                <div class="company">Ramcar Technology, Inc.</div>
+
+                <ul>
+                  <li><strong>Precision Assembly:</strong> Built components based on technical drawings.</li>
+                  <li><strong>Quality Inspection:</strong> Verified accuracy using metrology tools.</li>
+                  <li><strong>CAD/CAM:</strong> Interpreted technical designs for production.</li>
+                  <li><strong>Machine Operation:</strong> Assisted in fabrication processes.</li>
+                  <li><strong>Documentation:</strong> Maintained production records.</li>
+                </ul>
               </div>
-            </div>
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-data'></i> Tools & Platforms</h3>
-              <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bxl-git'></i> Git</div>
-                <div class="tech-pill"><i class='bx bxl-github'></i> GitHub</div>
-                <div class="tech-pill"><i class='bx bxl-figma'></i> Figma</div>
-                <div class="tech-pill"><i class='bx bxl-mongodb'></i> MongoDB</div>
-                <div class="tech-pill"><i class='bx bx-cloud'></i> AWS</div>
-              </div>
+
             </div>
           </div>
 
+          <!-- EDUCATION -->
           <div>
-            <h3 class="tech-section-title"><i class='bx bx-bar-chart-alt-2'></i> Proficiency</h3>
-            <div id="skill-bars">
-              <div class="bar-item">
-                <div class="bar-label"><span>HTML / CSS</span><span>95%</span></div>
-                <div class="bar-track"><div class="bar-fill" data-width="95%"></div></div>
-              </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>JavaScript</span><span>85%</span></div>
-                <div class="bar-track"><div class="bar-fill" data-width="85%"></div></div>
-              </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>React</span><span>80%</span></div>
-                <div class="bar-track"><div class="bar-fill" data-width="80%"></div></div>
-              </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>Node.js / Express</span><span>70%</span></div>
-                <div class="bar-track"><div class="bar-fill" data-width="70%"></div></div>
-              </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>Python</span><span>65%</span></div>
-                <div class="bar-track"><div class="bar-fill" data-width="65%"></div></div>
-              </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>UI/UX Design</span><span>75%</span></div>
-                <div class="bar-track"><div class="bar-fill" data-width="75%"></div></div>
-              </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>MongoDB / Databases</span><span>60%</span></div>
-                <div class="bar-track"><div class="bar-fill" data-width="60%"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <h2 class="exp-col-title">Education</h2>
+            <div class="timeline">
 
-    <!-- ═══════════════ CONTACT ═══════════════ -->
-    <div class="page" id="page-contact">
-      <div class="page-content">
-        <h1 class="page-title">Start the <span>Conversation</span></h1>
-        <p class="page-subtitle">Have a specific project in mind or just want to say hi? I’d love to hear from you. Whether you need a high-converting Website Design, a Social Media refresh, or a Technical Document Specialist to organize your operations, I’m here to help. Drop me a message and let’s talk about how we can get your business running smoother.</p>
+              <div class="timeline-item">
+                <div class="date">2014 – 2018</div>
+                <h3>Bachelor of Science in Industrial Technology</h3>
+                <div class="company">Bulacan State University</div>
 
-        <div class="contact-layout">
-          <div class="contact-info">
-            <h3>Ready to Scale?</h3>
-            <p>I’m currently open for freelance projects and full-time opportunities. From building AI & Automation systems that work while you sleep to managing your growth as a Lead Gen Specialist or Virtual Assistant, I focus on systems that buy back your time. If you're ready to move away from the "robot work" and back into your zone of genius, let’s collaborate.</p>
+                <ul>
+                  <li><strong>Mechanical Systems:</strong> Studied industrial manufacturing processes.</li>
+                  <li><strong>Welding Specialization:</strong> Trained in SMAW, MIG, TIG.</li>
+                  <li><strong>Technical Design:</strong> CAD-based blueprint creation.</li>
+                  <li><strong>Quality Control:</strong> Applied metrology standards.</li>
+                </ul>
+              </div>
 
-            <div class="contact-detail">
-              <div class="contact-detail-icon"><i class='bx bx-envelope'></i></div>
-              <div class="contact-detail-text">
-                <span>Email</span>
-                <!-- Replace with your actual email -->
-                <p>sugawarahiroshi@outlook.com</p>
-              </div>
-            </div>
-            <div class="contact-detail">
-              <div class="contact-detail-icon"><i class='bx bx-map'></i></div>
-              <div class="contact-detail-text">
-                <span>Location</span>
-                <!-- Replace with your actual location -->
-                <p>City of Malolos, Bulacan, Philippines</p>
-              </div>
-            </div>
-            <div class="contact-detail">
-              <div class="contact-detail-icon"><i class='bx bx-time'></i></div>
-              <div class="contact-detail-text">
-                <span>Response Time</span>
-                <p>Usually within 24 hours</p>
-              </div>
-            </div>
+              <div class="timeline-item">
+                <div class="date">2023</div>
+                <h3>Machinist NC II Certificate</h3>
+                <div class="company">TESDA</div>
 
-            <div class="social-links">
-              <a href=""><i class='bx bxl-github'></i></a>
-              <a href=""><i class='bx bxl-twitter'></i></a>
-              <a href=""><i class='bx bxl-youtube'></i></a>
-              <a href=""><i class='bx bxl-facebook-circle'></i></a>
+                <ul>
+                  <li><strong>Precision Metalworking:</strong> Fabrication and shaping techniques.</li>
+                  <li><strong>Machine Operation:</strong> Lathe and milling setup.</li>
+                  <li><strong>CNC Programming:</strong> Automated machining processes.</li>
+                  <li><strong>Technical Compliance:</strong> Blueprint interpretation.</li>
+                </ul>
+              </div>
+
             </div>
           </div>
 
-          <div class="contact-cta">
-            <h3>Send me a message</h3>
-            <p>Click the button below to open the contact form. Fill in your email and message and I'll get back to you as soon as possible.</p>
-            <button class="open-form-btn" onclick="document.querySelector('.formbutton-button').click()">
-              <i class='bx bx-send'></i> Open Contact Form
-            </button>
-            <div class="availability-badge">
-              <div class="availability-dot"></div>
-              Available for new projects
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
   </section>
 
-  <!-- Formspree Formbutton -->
-  <script src="https://formspree.io/js/formbutton-v1.min.js" defer></script>
-  <script>
-    window.formbutton=window.formbutton||function(){(formbutton.q=formbutton.q||[]).push(arguments)};
-    formbutton("create", {
-      action: "https://formspree.io/f/xqegawye",
-      title: "How can we help?",
-      fields: [
-        { type: "email", label: "Email:", name: "email", required: true, placeholder: "your@email.com" },
-        { type: "textarea", label: "Message:", name: "message", placeholder: "What's on your mind?" },
-        { type: "submit" }
-      ],
-      styles: {
-        title: { backgroundColor: "gray" },
-        button: { backgroundColor: "gray" }
-      }
-    });
-  </script>
-
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-
-    // ── SPA navigation ──
-    const navLinks = document.querySelectorAll('nav a[data-page]');
-    const pages = document.querySelectorAll('.page');
-
-    function showPage(pageId) {
-      pages.forEach(p => p.classList.remove('active'));
-      navLinks.forEach(a => a.classList.remove('active'));
-
-      document.getElementById('page-' + pageId).classList.add('active');
-      document.querySelector(`a[data-page="${pageId}"]`).classList.add('active');
-
-      // Animate skill bars when tech page opens
-      if (pageId === 'tech') {
-        setTimeout(() => {
-          document.querySelectorAll('.bar-fill').forEach(bar => {
-            bar.style.width = bar.dataset.width;
-          });
-        }, 100);
-      }
-    }
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        showPage(link.dataset.page);
-      });
-    });
-  </script>
 </body>
 </html>
