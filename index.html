@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-  <style>
+<style>
     /* ── Page switching ── */
     .page { display: none; width: 100%; height: 100%; }
     .page.active { display: flex; flex-direction: column; }
@@ -18,9 +18,15 @@
       padding: 0 10%;
       flex: 1;
       overflow-y: auto;
+      overflow-x: hidden;
       scrollbar-width: thin;
       scrollbar-color: #4acfee transparent;
+      /* Clip scroll inside the box */
+      max-height: 100%;
     }
+    .page-content::-webkit-scrollbar { width: 4px; }
+    .page-content::-webkit-scrollbar-track { background: transparent; }
+    .page-content::-webkit-scrollbar-thumb { background: #4acfee; border-radius: 4px; }
 
     .page-title {
       font-size: 42px;
@@ -36,6 +42,30 @@
       margin-bottom: 35px;
     }
 
+    /* ── Scroll fade-in ── */
+    .fade-in-item {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-in-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Job title rotator ── */
+    #job-title {
+      display: inline-block;
+      background: linear-gradient(to right, #4acfee, #53f8c9, #6070fd, #5bbdff, #4acfee);
+      background-size: 200%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: animate-gradient 2.5s linear infinite;
+      transition: opacity 0.45s ease;
+    }
+    #job-title.fade { opacity: 0; }
+
     /* ════════════ SERVICES ════════════ */
     .services-grid {
       display: grid;
@@ -47,7 +77,7 @@
       background: rgba(74,207,238,0.05);
       border: 1px solid rgba(74,207,238,0.2);
       border-radius: 20px;
-      padding: 30px 25px;
+      padding: 28px 22px;
       transition: 0.3s;
       cursor: default;
     }
@@ -57,9 +87,9 @@
       box-shadow: 0 0 15px rgba(74,207,238,0.2);
       transform: translateY(-4px);
     }
-    .service-icon { font-size: 36px; color: #4acfee; margin-bottom: 15px; }
-    .service-card h3 { color: white; font-size: 20px; margin-bottom: 10px; }
-    .service-card p  { color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.7; }
+    .service-icon { font-size: 34px; color: #4acfee; margin-bottom: 13px; }
+    .service-card h3 { color: white; font-size: 18px; margin-bottom: 8px; }
+    .service-card p  { color: rgba(255,255,255,0.6); font-size: 13px; line-height: 1.7; }
 
     /* ════════════ EXPERIENCE ════════════ */
     .exp-columns {
@@ -70,8 +100,8 @@
     }
     .exp-col-title {
       color: #4acfee;
-      font-size: 22px;
-      margin-bottom: 25px;
+      font-size: 20px;
+      margin-bottom: 22px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -84,7 +114,7 @@
       width: 2px;
       background: linear-gradient(to bottom, #4acfee, transparent);
     }
-    .timeline-item { position: relative; margin-bottom: 30px; }
+    .timeline-item { position: relative; margin-bottom: 28px; }
     .timeline-item::before {
       content: '';
       position: absolute;
@@ -94,39 +124,41 @@
       background: #4acfee;
       box-shadow: 0 0 8px #4acfee;
     }
-    .timeline-item .date  { color: #4acfee; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
-    .timeline-item h3     { color: white; font-size: 18px; margin-bottom: 8px; }
-    .timeline-item ul     { padding-left: 18px; margin-top: 5px; }
-    .timeline-item ul li  { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.7; margin-bottom: 6px; }
+    .timeline-item .date  { color: #4acfee; font-size: 13px; font-weight: bold; margin-bottom: 4px; }
+    .timeline-item h3     { color: white; font-size: 17px; margin-bottom: 7px; }
+    .timeline-item ul     { padding-left: 18px; margin-top: 4px; }
+    .timeline-item ul li  { color: rgba(255,255,255,0.65); font-size: 13px; line-height: 1.7; margin-bottom: 5px; }
     .timeline-item ul li strong { color: #4acfee; }
 
     /* ════════════ TECH STACK ════════════ */
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      gap: 30px;
       padding-bottom: 30px;
     }
-    .tech-section { margin-bottom: 30px; }
+    .tech-section { margin-bottom: 22px; }
     .tech-section-title {
       color: #4acfee;
-      font-size: 18px;
-      margin-bottom: 15px;
+      font-size: 15px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .tech-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 8px; }
     .tech-pill {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
+      gap: 6px;
+      padding: 7px 14px;
       background: rgba(74,207,238,0.07);
       border: 1px solid rgba(74,207,238,0.25);
       border-radius: 50px;
       color: white;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: bold;
       transition: 0.3s;
       cursor: default;
@@ -134,15 +166,15 @@
     .tech-pill:hover {
       background: rgba(74,207,238,0.15);
       border-color: #4acfee;
-      box-shadow: 0 0 10px rgba(74,207,238,0.2);
+      box-shadow: 0 0 8px rgba(74,207,238,0.2);
       transform: translateY(-2px);
     }
-    .tech-pill i { font-size: 20px; color: #4acfee; }
+    .tech-pill i { font-size: 16px; color: #4acfee; }
 
-    .bar-item { margin-bottom: 16px; }
-    .bar-label { display: flex; justify-content: space-between; color: white; font-size: 14px; margin-bottom: 6px; }
+    .bar-item { margin-bottom: 13px; }
+    .bar-label { display: flex; justify-content: space-between; color: white; font-size: 13px; margin-bottom: 5px; }
     .bar-label span:last-child { color: #4acfee; }
-    .bar-track { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+    .bar-track { width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
     .bar-fill {
       height: 100%;
       border-radius: 10px;
@@ -155,48 +187,114 @@
     .contact-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      gap: 50px;
       padding-bottom: 30px;
       align-items: start;
     }
-    .contact-info h3   { color: white; font-size: 24px; margin-bottom: 10px; }
-    .contact-info > p  { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.8; margin-bottom: 35px; }
+    .contact-info h3   { color: white; font-size: 22px; margin-bottom: 10px; }
+    .contact-info > p  { color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.8; margin-bottom: 28px; }
 
-    .contact-detail { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+    .contact-detail { display: flex; align-items: center; gap: 15px; margin-bottom: 18px; }
     .contact-detail-icon {
-      width: 45px; height: 45px;
+      width: 42px; height: 42px;
       border: 2px solid #4acfee; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      color: #4acfee; font-size: 20px; flex-shrink: 0; transition: 0.3s;
+      color: #4acfee; font-size: 18px; flex-shrink: 0; transition: 0.3s;
     }
     .contact-detail:hover .contact-detail-icon { background: #4acfee; color: #0e1217; box-shadow: 0 0 10px #4acfee; }
-    .contact-detail-text span { display: block; color: rgba(255,255,255,0.45); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
-    .contact-detail-text p    { color: white; font-size: 15px; margin: 2px 0 0 0; }
+    .contact-detail-text span { display: block; color: rgba(255,255,255,0.45); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+    .contact-detail-text p    { color: white; font-size: 14px; margin: 2px 0 0 0; }
 
-    .social-links { display: flex; gap: 12px; margin-top: 30px; }
+    .social-links { display: flex; gap: 10px; margin-top: 25px; }
     .social-links a {
-      display: inline-flex; padding: 10px;
+      display: inline-flex; padding: 9px;
       border: 2px solid #4acfee; border-radius: 50%;
-      font-size: 22px; color: #4acfee; text-decoration: none; transition: 0.3s;
+      font-size: 20px; color: #4acfee; text-decoration: none; transition: 0.3s;
     }
     .social-links a:hover { background: #4acfee; color: #0e1217; box-shadow: 0 0 10px #4acfee; }
 
-    .contact-cta h3   { color: white; font-size: 22px; margin-bottom: 12px; }
-    .contact-cta > p  { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.8; margin-bottom: 30px; }
+    /* Contact form */
+    .contact-form-wrap h3 { color: white; font-size: 20px; margin-bottom: 8px; }
+    .contact-form-wrap > p { color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
 
-    .open-form-btn {
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group label { color: rgba(255,255,255,0.5); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+    .form-group input,
+    .form-group textarea {
+      background: rgba(74,207,238,0.06);
+      border: 1px solid rgba(74,207,238,0.25);
+      border-radius: 12px;
+      padding: 11px 15px;
+      color: white;
+      font-size: 14px;
+      font-family: Arial, Helvetica, sans-serif;
+      resize: none;
+      transition: 0.3s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #4acfee;
+      box-shadow: 0 0 10px rgba(74,207,238,0.2);
+      background: rgba(74,207,238,0.1);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+    .submit-btn {
       display: inline-flex; align-items: center; gap: 10px;
-      padding: 15px 35px;
+      padding: 13px 30px;
       background-color: #4acfee; border: 2px solid #4acfee; border-radius: 40px;
       box-shadow: 0 0 10px #4acfee;
-      font-size: 16px; font-weight: 900; color: #0e1217;
+      font-size: 15px; font-weight: 900; color: #0e1217;
       cursor: pointer; transition: 0.3s;
+      width: fit-content; margin-top: 4px;
     }
-    .open-form-btn:hover { background-color: transparent; box-shadow: none; color: #4acfee; }
+    .submit-btn:hover { background-color: transparent; box-shadow: none; color: #4acfee; }
 
-    .availability-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; color: rgba(255,255,255,0.6); font-size: 14px; }
+    .availability-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; color: rgba(255,255,255,0.6); font-size: 13px; }
     .availability-dot   { width: 8px; height: 8px; border-radius: 50%; background: #53f8c9; box-shadow: 0 0 6px #53f8c9; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ════════════ MOBILE NAV ════════════ */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 5px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 2px;
+      background: #4acfee;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: rgba(14,18,23,0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(74,207,238,0.2);
+      padding: 10px 0;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: bold;
+      padding: 12px 30px;
+      transition: 0.2s;
+      border: none;
+    }
+    .mobile-nav a:hover,
+    .mobile-nav a.active { color: #4acfee; }
 
     /* ════════════ RESPONSIVE ════════════ */
     @media (max-width: 980px) {
@@ -204,11 +302,16 @@
       .exp-columns    { grid-template-columns: 1fr; }
       .two-col        { grid-template-columns: 1fr; }
       .contact-layout { grid-template-columns: 1fr; gap: 30px; }
+      .hamburger { display: flex; }
+      nav ul { display: none !important; }
+      .page-title { font-size: 32px; }
     }
     @media (max-width: 580px) {
       .services-grid { grid-template-columns: 1fr; }
+      .page-content  { padding: 0 6%; }
+      .page-title    { font-size: 28px; }
     }
-    /* ── Job title typewriter ── */
+  </style>
 #job-title {
   display: inline-block;
   background: linear-gradient(to right, #4acfee, #53f8c9, #6070fd, #5bbdff, #4acfee);
@@ -243,7 +346,7 @@
 
   <section class="main-section">
 
-    <!-- ══ NAV (original, untouched) ══ -->
+    <!-- ══ NAV ══ -->
     <nav>
       <h1 data-aos="zoom-in" data-aos-duration="1000"><span style="color: #4acfee;">Hiroshi</span>Sugawara</h1>
       <ul>
@@ -253,7 +356,18 @@
         <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400"><a href="#" data-page="tech">Tech Stack</a></li>
         <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500"><a href="#" data-page="contact">Contact</a></li>
       </ul>
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
+    <!-- Mobile nav -->
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#" data-page="home" class="active">Home</a>
+      <a href="#" data-page="services">Services Offered</a>
+      <a href="#" data-page="experience">Experience</a>
+      <a href="#" data-page="tech">Tech Stack</a>
+      <a href="#" data-page="contact">Contact</a>
+    </div>
 
     <!-- ══════════════════════════════════════
          HOME  (original, untouched)
@@ -262,7 +376,7 @@
       <div class="hero">
         <div class="hero-info">
           <h1 data-aos="fade-right" data-aos-duration="1000" data-aos-delay="700">Hi, I'm Hiroshi</h1>
-          <h2 data-aos="fade-left" data-aos-duration="1000" data-aos-delay="900">I'm <span id="job-title">an AI & Automation Specialist</span></h2>
+          <h2 data-aos="fade-left"  data-aos-duration="1000" data-aos-delay="900">I'm a <span id="job-title">AI & Automation Specialist</span></h2>
           <p data-aos="flip-down"   data-aos-duration="1000" data-aos-delay="1000">
             I am a Systems-Driven Specialist providing high-level support for corporate operations and creator growth. 
             I bridge the gap between technical precision and creative outreach to deliver measurable results for my clients.
@@ -272,9 +386,9 @@
           <div class="Buttons">
             <button class="btn" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="1100">Hire me</button>
             <ul class="ul-icons">
-              <li><a href="https://ph.linkedin.com/in/hiroshisugawara?trk=people-guest_people_search-card" target="_blank"><i class='bx bxl-linkedin'></i></a></li>
-              <li><a href="https://v2.onlinejobs.ph/jobseekers/info/4778514" target="_blank"><i class='bx bx-briefcase'></i></a></li>
-              <li><a href="https://ph.jobstreet.com/profiles/hiroshi-sugawara-7h0BBxsyqH" target="_blank"><i class='bx bx-search-alt'></i></a></li>
+              <li><a href="https://linkedin.com/in/your-profile" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a></li>
+              <li><a href="https://onlinejobs.ph/jobseekers/info/0000000" target="_blank" title="OnlineJobs.ph"><i class='bx bx-briefcase'></i></a></li>
+              <li><a href="https://jobstreet.com.ph/en/profile/your-profile" target="_blank" title="Jobstreet"><i class='bx bx-search-alt'></i></a></li>
             </ul>
           </div>
         </div>
@@ -300,35 +414,35 @@
         <p class="page-subtitle">Here's what I can help you with. Each service is tailored to your specific needs.</p>
 
         <div class="services-grid">
-          <div class="service-card">
+          <div class="service-card fade-in-item">
             <div class="service-icon"><i class='bx bx-bot'></i></div>
             <h3>AI & Automation Specialist</h3>
-            <p>Leveraging AI tools and automation platforms like Zapier and Make to streamline workflows, eliminate repetitive tasks, and build smarter systems for your business.</p>
+            <p>Leveraging AI tools and automation platforms like Zapier, Make, and n8n to streamline workflows, eliminate repetitive tasks, and build smarter, faster systems for your business.</p>
           </div>
-          <div class="service-card">
+          <div class="service-card fade-in-item">
             <div class="service-icon"><i class='bx bx-layout'></i></div>
             <h3>Website Design & Page Layout</h3>
-            <p>Designing clean, on-brand website layouts and landing pages optimized for user experience, visual clarity, and conversion — no clutter, just results.</p>
+            <p>Designing clean, on-brand website layouts and landing pages optimized for user experience, visual clarity, and conversions — using tools like Figma, WordPress, and Webflow.</p>
           </div>
-          <div class="service-card">
+          <div class="service-card fade-in-item">
             <div class="service-icon"><i class='bx bxl-instagram-alt'></i></div>
             <h3>Social Media Manager</h3>
-            <p>Managing content creation, scheduling, community engagement, and growth strategy across platforms to build your brand presence consistently.</p>
+            <p>Managing content creation, scheduling, community engagement, and growth strategy across platforms to consistently build your brand presence and grow your audience.</p>
           </div>
-          <div class="service-card">
+          <div class="service-card fade-in-item">
             <div class="service-icon"><i class='bx bx-target-lock'></i></div>
             <h3>Lead Generation & Outreach Specialist</h3>
-            <p>Identifying and qualifying prospects, crafting outreach messages, and building pipelines that turn cold contacts into warm opportunities for your business.</p>
+            <p>Identifying and qualifying prospects, crafting targeted outreach messages, and building pipelines that convert cold contacts into warm, ready-to-close opportunities.</p>
           </div>
-          <div class="service-card">
-            <div class="service-icon"><i class='bx bx-file'></i></div>
+          <div class="service-card fade-in-item">
+            <div class="service-icon"><i class='bx bx-file-blank'></i></div>
             <h3>Technical Document Specialist</h3>
-            <p>Creating structured, accurate, and professional documentation — SOPs, reports, guides, and technical write-ups — formatted clearly from rough notes or briefs.</p>
+            <p>Creating structured, accurate, and professional documentation — SOPs, process guides, reports, and technical write-ups — formatted clearly from rough notes or briefs.</p>
           </div>
-          <div class="service-card">
+          <div class="service-card fade-in-item">
             <div class="service-icon"><i class='bx bx-headphone'></i></div>
             <h3>Virtual Assistant</h3>
-            <p>Providing reliable, high-level administrative and executive support — inbox and calendar management, data entry, research, and keeping your operations running smoothly.</p>
+            <p>Providing reliable, high-level administrative and executive support — inbox and calendar management, data entry, research, and keeping your operations running without friction.</p>
           </div>
         </div>
       </div>
@@ -340,7 +454,7 @@
     <div class="page" id="page-experience">
       <div class="page-content">
         <h1 class="page-title">My <span>Experience</span></h1>
-        <p class="page-subtitle">A timeline of my professional career, followed by my academic and technical credentials.</p>
+        <p class="page-subtitle">A timeline of my professional journey and academic background.</p>
 
         <div class="exp-columns">
 
@@ -350,25 +464,24 @@
 
               <div class="timeline-item">
                 <div class="date">Jan 2025 – Jan 2026</div>
-                <h3>Freelance Virtual Assistant | Junior Social Media Manager (SMM)</h3>
+                <h3>Freelance Virtual Assistant</h3>
                 <ul>
-                  <li><strong>Executive Admin:</strong> Streamlined operations via proactive calendar management and email filtering.</li>
-                  <li><strong>Social Media:</strong> Managed daily Facebook operations, content scheduling, and technical troubleshooting.</li>
-                  <li><strong>Growth & Monetization:</strong> Drove engagement and reached eligibility for creator monetization tools.</li>
-                  <li><strong>Community Moderation: </strong> Handled high-volume inquiries and moderated comments to maintain brand presence.</li>
-                  <li><strong>Technical Support: </strong> Resolved account issues and coordinated with platform support for maximum uptime.</li>
+                  <li><strong>Executive Admin:</strong> Streamlined day-to-day operations and provided high-level administrative support to clients.</li>
+                  <li><strong>Social Media:</strong> Managed daily content creation, scheduling, and community engagement across platforms.</li>
+                  <li><strong>Growth & Monetization:</strong> Supported creators in achieving channel monetization through strategic content and outreach.</li>
+                  <li><strong>Community:</strong> Handled audience engagement and moderation to maintain healthy, active communities.</li>
+                  <li><strong>Technical:</strong> Resolved platform and workflow issues to keep client operations running smoothly.</li>
                 </ul>
               </div>
 
               <div class="timeline-item">
-                <div class="date">Jan 2018 - Apr 2018</div>
+                <div class="date">2018</div>
                 <h3>Machinist Assistant</h3>
                 <ul>
-                  <li><strong>Precision Assembly:</strong> Assembled components according to technical blueprints, ensuring 100% alignment with quality standards.</li>
-                  <li><strong>Inspection:</strong> Performed measurements and inspections using metrology tools to verify part accuracy and design compliance.</li>
-                  <li><strong>CAD/CAM & Design: </strong> Interpreted complex technical drawings and project plans using CAD/CAM systems for manufacturing tasks.</li>
-                  <li><strong>Machine Operation: </strong> Assisted in the setup and safe operation of machine tools to support efficient fabrication and assembly.</li>
-                  <li><strong>Technical Documentation: </strong> Maintained accurate records of manufacturing processes, internship activities, and project outputs</li>
+                  <li><strong>Precision Assembly:</strong> Built and assembled mechanical components to exact specifications.</li>
+                  <li><strong>Inspection:</strong> Verified dimensional accuracy using measurement tools and quality standards.</li>
+                  <li><strong>CAD:</strong> Interpreted engineering designs and technical drawings for production use.</li>
+                  <li><strong>Machines:</strong> Assisted in operating and maintaining machining equipment safely.</li>
                 </ul>
               </div>
 
@@ -411,177 +524,176 @@
     <!-- ══════════════════════════════════════
          TECH STACK
     ══════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════
+         TECH STACK
+    ══════════════════════════════════════ -->
     <div class="page" id="page-tech">
       <div class="page-content">
         <h1 class="page-title">Tech <span>Stack</span></h1>
-        <p class="page-subtitle">The tools and technologies I use to deliver results.</p>
+        <p class="page-subtitle">Tools I use and my digital presence.</p>
 
         <div class="two-col">
 
+          <!-- LEFT: Tool categories -->
           <div>
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-desktop'></i> Productivity & Admin</h3>
+            <div class="tech-section fade-in-item">
+              <h3 class="tech-section-title"><i class='bx bx-bot'></i> AI & Workflow Automation</h3>
               <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bxl-microsoft'></i> Microsoft Office</div>
-                <div class="tech-pill"><i class='bx bxl-google'></i> Google Workspace</div>
-                <div class="tech-pill"><i class='bx bx-notepad'></i> Notion</div>
-                <div class="tech-pill"><i class='bx bxl-trello'></i> Trello</div>
-                <div class="tech-pill"><i class='bx bx-check-square'></i> ClickUp</div>
-                <div class="tech-pill"><i class='bx bx-table'></i> Airtable</div>
-                <div class="tech-pill"><i class='bx bx-grid'></i> Monday.com</div>
-                <div class="tech-pill"><i class='bx bxl-slack'></i> Slack</div>
-                <div class="tech-pill"><i class='bx bx-video'></i> Zoom</div>
-                <div class="tech-pill"><i class='bx bx-play-circle'></i> Loom</div>
-              </div>
-            </div>
-
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-palette'></i> Design & Video</h3>
-              <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bxl-figma'></i> Figma</div>
-                <div class="tech-pill"><i class='bx bx-brush'></i> Canva</div>
-                <div class="tech-pill"><i class='bx bx-brush-alt'></i> Affinity</div>
-                <div class="tech-pill"><i class='bx bx-video'></i> DaVinci Resolve</div>
-              </div>
-            </div>
-
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-store'></i> E-Commerce & Social</h3>
-              <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bxl-shopify'></i> Shopify</div>
-                <div class="tech-pill"><i class='bx bxl-youtube'></i> YouTube</div>
-                <div class="tech-pill"><i class='bx bxl-instagram'></i> Instagram</div>
-                <div class="tech-pill"><i class='bx bxl-tiktok'></i> TikTok</div>
-                <div class="tech-pill"><i class='bx bxl-facebook'></i> Facebook</div>
-              </div>
-            </div>
-
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-bot'></i> AI & Automation</h3>
-              <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bx-brain'></i> Claude</div>
                 <div class="tech-pill"><i class='bx bx-brain'></i> ChatGPT</div>
-                <div class="tech-pill"><i class='bx bx-check'></i> Grammarly</div>
+                <div class="tech-pill"><i class='bx bx-brain'></i> Claude</div>
                 <div class="tech-pill"><i class='bx bx-link'></i> Zapier</div>
                 <div class="tech-pill"><i class='bx bx-link'></i> Make</div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-bot'></i> AI & Automation</h3>
-              <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bx-brain'></i> Claude</div>
-                <div class="tech-pill"><i class='bx bx-brain'></i> ChatGPT</div>
-                <div class="tech-pill"><i class='bx bx-link'></i> Zapier</div>
-                <div class="tech-pill"><i class='bx bx-link'></i> Make</div>
-                <div class="tech-pill"><i class='bx bx-check'></i> Grammarly</div>
-                <div class="tech-pill"><i class='bx bx-cog'></i> Notion AI</div>
+                <div class="tech-pill"><i class='bx bx-link'></i> n8n</div>
+                <div class="tech-pill"><i class='bx bx-cog'></i> OpenClaw</div>
+                <div class="tech-pill"><i class='bx bx-brain'></i> Gemini</div>
+                <div class="tech-pill"><i class='bx bx-brain'></i> Perplexity</div>
               </div>
             </div>
 
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-layout'></i> Website Design & Layout</h3>
+            <div class="tech-section fade-in-item">
+              <h3 class="tech-section-title"><i class='bx bx-video'></i> Video Editing</h3>
               <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bxl-figma'></i> Figma</div>
+                <div class="tech-pill"><i class='bx bx-film'></i> DaVinci Resolve</div>
+                <div class="tech-pill"><i class='bx bx-film'></i> CapCut</div>
+                <div class="tech-pill"><i class='bx bx-film'></i> Adobe Premiere</div>
+              </div>
+            </div>
+
+            <div class="tech-section fade-in-item">
+              <h3 class="tech-section-title"><i class='bx bx-palette'></i> Photo & Graphic Design</h3>
+              <div class="tech-grid">
                 <div class="tech-pill"><i class='bx bx-brush'></i> Canva</div>
-                <div class="tech-pill"><i class='bx bx-brush-alt'></i> Affinity</div>
+                <div class="tech-pill"><i class='bx bx-brush-alt'></i> Affinity Designer</div>
+                <div class="tech-pill"><i class='bx bx-brush-alt'></i> Affinity Photo</div>
+                <div class="tech-pill"><i class='bx bxl-figma'></i> Figma</div>
+                <div class="tech-pill"><i class='bx bx-image'></i> Adobe Express</div>
+              </div>
+            </div>
+
+            <div class="tech-section fade-in-item">
+              <h3 class="tech-section-title"><i class='bx bx-globe'></i> Website & Page Building</h3>
+              <div class="tech-grid">
                 <div class="tech-pill"><i class='bx bxl-wordpress'></i> WordPress</div>
                 <div class="tech-pill"><i class='bx bxl-shopify'></i> Shopify</div>
+                <div class="tech-pill"><i class='bx bx-window'></i> Webflow</div>
+                <div class="tech-pill"><i class='bx bx-window-alt'></i> Wix</div>
+                <div class="tech-pill"><i class='bx bx-code-alt'></i> Elementor</div>
               </div>
             </div>
 
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bxl-instagram'></i> Social Media</h3>
+            <div class="tech-section fade-in-item">
+              <h3 class="tech-section-title"><i class='bx bxl-instagram'></i> Social Media Platforms</h3>
               <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bxl-instagram'></i> Instagram</div>
                 <div class="tech-pill"><i class='bx bxl-facebook'></i> Facebook</div>
+                <div class="tech-pill"><i class='bx bxl-instagram'></i> Instagram</div>
                 <div class="tech-pill"><i class='bx bxl-tiktok'></i> TikTok</div>
                 <div class="tech-pill"><i class='bx bxl-youtube'></i> YouTube</div>
                 <div class="tech-pill"><i class='bx bxl-linkedin'></i> LinkedIn</div>
+                <div class="tech-pill"><i class='bx bxl-twitter'></i> X (Twitter)</div>
                 <div class="tech-pill"><i class='bx bx-calendar'></i> Buffer</div>
                 <div class="tech-pill"><i class='bx bx-calendar-check'></i> Later</div>
+                <div class="tech-pill"><i class='bx bx-time'></i> Hootsuite</div>
               </div>
             </div>
 
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-target-lock'></i> Lead Generation & Outreach</h3>
+            <div class="tech-section fade-in-item">
+              <h3 class="tech-section-title"><i class='bx bx-target-lock'></i> Lead Generation & CRM</h3>
               <div class="tech-grid">
                 <div class="tech-pill"><i class='bx bxl-linkedin'></i> LinkedIn Sales Nav</div>
                 <div class="tech-pill"><i class='bx bx-search'></i> Hunter.io</div>
-                <div class="tech-pill"><i class='bx bx-envelope'></i> Instantly</div>
                 <div class="tech-pill"><i class='bx bx-data'></i> Apollo.io</div>
-                <div class="tech-pill"><i class='bx bx-table'></i> Airtable</div>
+                <div class="tech-pill"><i class='bx bx-envelope'></i> Instantly</div>
+                <div class="tech-pill"><i class='bx bx-envelope'></i> Lemlist</div>
+                <div class="tech-pill"><i class='bx bx-user'></i> HubSpot</div>
               </div>
             </div>
 
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-file'></i> Technical Documentation</h3>
+            <div class="tech-section fade-in-item">
+              <h3 class="tech-section-title"><i class='bx bx-file'></i> Documentation & Writing</h3>
               <div class="tech-grid">
-                <div class="tech-pill"><i class='bx bxl-microsoft'></i> Microsoft Office</div>
-                <div class="tech-pill"><i class='bx bxl-google'></i> Google Workspace</div>
+                <div class="tech-pill"><i class='bx bxl-microsoft'></i> Word</div>
+                <div class="tech-pill"><i class='bx bxl-microsoft'></i> Excel</div>
+                <div class="tech-pill"><i class='bx bxl-microsoft'></i> PowerPoint</div>
+                <div class="tech-pill"><i class='bx bxl-google'></i> Google Docs</div>
+                <div class="tech-pill"><i class='bx bxl-google'></i> Google Sheets</div>
+                <div class="tech-pill"><i class='bx bxl-google'></i> Google Slides</div>
                 <div class="tech-pill"><i class='bx bx-notepad'></i> Notion</div>
                 <div class="tech-pill"><i class='bx bx-check'></i> Grammarly</div>
               </div>
             </div>
 
-            <div class="tech-section">
-              <h3 class="tech-section-title"><i class='bx bx-headphone'></i> Virtual Assistant & Admin</h3>
+            <div class="tech-section fade-in-item">
+              <h3 class="tech-section-title"><i class='bx bx-headphone'></i> Project Management & Admin</h3>
               <div class="tech-grid">
                 <div class="tech-pill"><i class='bx bxl-trello'></i> Trello</div>
                 <div class="tech-pill"><i class='bx bx-check-square'></i> ClickUp</div>
                 <div class="tech-pill"><i class='bx bx-grid'></i> Monday.com</div>
+                <div class="tech-pill"><i class='bx bx-table'></i> Airtable</div>
                 <div class="tech-pill"><i class='bx bxl-slack'></i> Slack</div>
                 <div class="tech-pill"><i class='bx bx-video'></i> Zoom</div>
                 <div class="tech-pill"><i class='bx bx-play-circle'></i> Loom</div>
+                <div class="tech-pill"><i class='bx bxl-google'></i> Google Meet</div>
               </div>
             </div>
           </div>
 
+          <!-- RIGHT: Proficiency bars -->
           <div>
             <h3 class="tech-section-title"><i class='bx bx-bar-chart-alt-2'></i> Proficiency</h3>
             <div id="skill-bars">
-              <div class="bar-item">
-                <div class="bar-label"><span>AI & Automation</span><span>85%</span></div>
+              <div class="bar-item fade-in-item">
+                <div class="bar-label"><span>AI & Workflow Automation</span><span>85%</span></div>
                 <div class="bar-track"><div class="bar-fill" data-width="85%"></div></div>
               </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>Website Design & Layout</span><span>80%</span></div>
+              <div class="bar-item fade-in-item">
+                <div class="bar-label"><span>Video Editing</span><span>80%</span></div>
                 <div class="bar-track"><div class="bar-fill" data-width="80%"></div></div>
               </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>Social Media Management (SMM)</span><span>85%</span></div>
-                <div class="bar-track"><div class="bar-fill" data-width="85%"></div></div>
+              <div class="bar-item fade-in-item">
+                <div class="bar-label"><span>Photo & Graphic Design</span><span>78%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="78%"></div></div>
               </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>Lead Generation & Outreach</span><span>75%</span></div>
+              <div class="bar-item fade-in-item">
+                <div class="bar-label"><span>Website & Page Building</span><span>80%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="80%"></div></div>
+              </div>
+              <div class="bar-item fade-in-item">
+                <div class="bar-label"><span>Social Media Management</span><span>88%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="88%"></div></div>
+              </div>
+              <div class="bar-item fade-in-item">
+                <div class="bar-label"><span>Lead Generation & CRM</span><span>75%</span></div>
                 <div class="bar-track"><div class="bar-fill" data-width="75%"></div></div>
               </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>Technical Documentation</span><span>90%</span></div>
+              <div class="bar-item fade-in-item">
+                <div class="bar-label"><span>Documentation & Writing</span><span>90%</span></div>
                 <div class="bar-track"><div class="bar-fill" data-width="90%"></div></div>
               </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>Virtual Assistant & Admin</span><span>90%</span></div>
+              <div class="bar-item fade-in-item">
+                <div class="bar-label"><span>Project Management & Admin</span><span>90%</span></div>
                 <div class="bar-track"><div class="bar-fill" data-width="90%"></div></div>
               </div>
             </div>
           </div>
 
-    <!-- ══════════════════════════════════════
+        </div>
+      </div>
+    </div>
+
+   <!-- ══════════════════════════════════════
          CONTACT
     ══════════════════════════════════════ -->
     <div class="page" id="page-contact">
       <div class="page-content">
-        <h1 class="page-title">Start the <span>Conversation</span></h1>
-        <p class="page-subtitle">Have a specific project in mind or just want to say hi? I’d love to hear from you. Whether you need a high-converting Website Design, a Social Media refresh, or a Technical Document Specialist to organize your operations, I’m here to help. Drop me a message and let’s talk about how we can get your business running smoother.</p>
+        <h1 class="page-title">Get In <span>Touch</span></h1>
+        <p class="page-subtitle">Have a project in mind or just want to say hi? I'd love to hear from you.</p>
 
         <div class="contact-layout">
 
-          <div class="contact-info">
-            <h3>Ready to Scale?</h3>
-            <p>I’m currently open for freelance projects and full-time opportunities. From building AI & Automation systems that work while you sleep to managing your growth as a Lead Gen Specialist or Virtual Assistant, I focus on systems that buy back your time. If you're ready to move away from the "robot work" and back into your zone of genius, let’s collaborate.</p>
+          <!-- Left: details -->
+          <div class="contact-info fade-in-item">
+            <h3>Let's work together</h3>
+            <p>I'm currently open for freelance projects and remote opportunities. Whether you need a reliable VA, a social media manager, or an automation specialist — feel free to reach out.</p>
 
             <div class="contact-detail">
               <div class="contact-detail-icon"><i class='bx bx-envelope'></i></div>
@@ -607,34 +719,40 @@
             </div>
 
             <div class="social-links">
-              <a href="https://ph.linkedin.com/in/hiroshisugawara?trk=people-guest_people_search-card" target="_blank"><i class='bx bxl-linkedin'></i></a>
-              <a href="https://v2.onlinejobs.ph/jobseekers/info/4778514" target="_blank"><i class='bx bx-briefcase'></i></a>
-              <a href="https://ph.jobstreet.com/profiles/hiroshi-sugawara-7h0BBxsyqH" target="_blank"><i class='bx bx-search-alt'></i></a>
+              <a href="https://linkedin.com/in/your-profile" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+              <a href="https://onlinejobs.ph/jobseekers/info/0000000" target="_blank" title="OnlineJobs.ph"><i class='bx bx-briefcase'></i></a>
+              <a href="https://jobstreet.com.ph/en/profile/your-profile" target="_blank" title="Jobstreet"><i class='bx bx-search-alt'></i></a>
+            </div>
+
+            <div class="availability-badge" style="margin-top:22px;">
+              <div class="availability-dot"></div>
+              Available for new projects
             </div>
           </div>
 
-          <div class="contact-cta">
+          <!-- Right: Formspree form -->
+          <div class="contact-form-wrap fade-in-item">
             <h3>Send me a message</h3>
-            <p>Click the button below to open the contact form. Fill in your email and message, and I'll get back to you as soon as possible.</p>
+            <p>Fill in the form below and I'll get back to you as soon as possible.</p>
 
-            <form action="https://formspree.io/f/xqegawye" method="POST" class="contact-form">
+            <form class="contact-form" action="https://formspree.io/f/xqegawye" method="POST">
               <div class="form-group">
-                <label>Your email</label>
-                <input type="email" name="email" placeholder="your@email.com" required>
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="What is this about?" required>
               </div>
               <div class="form-group">
-                <label>Your message</label>
-                <textarea name="message" placeholder="What's on your mind?" rows="4"></textarea>
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
               </div>
-              <button type="submit" class="open-form-btn">
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="What's on your mind?"></textarea>
+              </div>
+              <button type="submit" class="submit-btn">
                 <i class='bx bx-send'></i> Send Message
               </button>
             </form>
 
-            <div class="availability-badge">
-              <div class="availability-dot"></div>
-              Available for new projects
-            </div>
           </div>
 
         </div>
@@ -643,36 +761,18 @@
 
   </section>
 
-  <!-- ── Formspree (verbatim, theme-matched) ── -->
-<!-- modify this form HTML and place wherever you want your form -->
-<form
-  action="https://formspree.io/f/xqegawye"
-  method="POST"
->
-  <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Send</button>
-</form>
-
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init();
 
     // ── Job title rotator ──
     const titles = [
-      "an AI & Automation Specialist",
-      "a Website Design & Page Layout",
-      "a Social Media Manager (SMM)",
-      "a Lead Generation & Outreach Specialist",
-      "a Technical Document Specialist",
-      "an Executive Virtual Assistant"
+      "AI & Automation Specialist",
+      "Website Design & Page Layout",
+      "Social Media Manager",
+      "Lead Generation & Outreach Specialist",
+      "Technical Document Specialist",
+      "Virtual Assistant"
     ];
     let titleIndex = 0;
     const titleEl = document.getElementById('job-title');
@@ -682,38 +782,44 @@
         titleIndex = (titleIndex + 1) % titles.length;
         titleEl.textContent = titles[titleIndex];
         titleEl.classList.remove('fade');
-      }, 500);
-    }, 2500);
+      }, 450);
+    }, 2800);
 
     // ── SPA navigation ──
-    const navLinks = document.querySelectorAll('nav a[data-page]');
+    const navLinks = document.querySelectorAll('nav a[data-page], .mobile-nav a[data-page]');
     const pages    = document.querySelectorAll('.page');
 
     function triggerFadeIns(pageEl) {
-      const items = pageEl.querySelectorAll('.service-card, .timeline-item, .tech-section, .tech-pill, .bar-item, .contact-detail, .contact-cta, .page-title, .page-subtitle');
-      items.forEach(el => el.classList.add('fade-in-section'));
-      setTimeout(() => {
-        items.forEach((el, i) => {
-          setTimeout(() => el.classList.add('visible'), i * 60);
-        });
-      }, 50);
+      pageEl.querySelectorAll('.fade-in-item').forEach((el, i) => {
+        el.classList.remove('visible');
+        setTimeout(() => el.classList.add('visible'), 60 + i * 55);
+      });
     }
 
     function showPage(pageId) {
-      pages.forEach(p    => p.classList.remove('active'));
-      navLinks.forEach(a => a.classList.remove('active'));
+      pages.forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('[data-page]').forEach(a => a.classList.remove('active'));
       const target = document.getElementById('page-' + pageId);
       target.classList.add('active');
-      document.querySelector(`a[data-page="${pageId}"]`).classList.add('active');
+      document.querySelectorAll(`[data-page="${pageId}"]`).forEach(a => a.classList.add('active'));
+
+      // Reset scroll to top
+      target.querySelector('.page-content') && (target.querySelector('.page-content').scrollTop = 0);
+
       triggerFadeIns(target);
 
       if (pageId === 'tech') {
+        // Reset then animate bars
+        document.querySelectorAll('.bar-fill').forEach(bar => bar.style.width = '0');
         setTimeout(() => {
           document.querySelectorAll('.bar-fill').forEach(bar => {
             bar.style.width = bar.dataset.width;
           });
-        }, 100);
+        }, 200);
       }
+
+      // Close mobile nav if open
+      document.querySelector('.mobile-nav').classList.remove('open');
     }
 
     navLinks.forEach(link => {
@@ -722,6 +828,45 @@
         showPage(link.dataset.page);
       });
     });
+
+    // ── Hamburger ──
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.querySelector('.mobile-nav');
+    hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+
+    // ── Form submission feedback ──
+    const form = document.querySelector('.contact-form');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('.submit-btn');
+        btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
+        btn.disabled = true;
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            btn.innerHTML = '<i class="bx bx-check"></i> Sent!';
+            btn.style.background = '#53f8c9';
+            form.reset();
+            setTimeout(() => {
+              btn.innerHTML = '<i class="bx bx-send"></i> Send Message';
+              btn.style.background = '';
+              btn.disabled = false;
+            }, 3000);
+          } else {
+            btn.innerHTML = '<i class="bx bx-error"></i> Failed — try again';
+            btn.disabled = false;
+          }
+        } catch {
+          btn.innerHTML = '<i class="bx bx-error"></i> Network error';
+          btn.disabled = false;
+        }
+      });
+    }
   </script>
 
 </body>
